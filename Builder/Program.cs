@@ -6,7 +6,16 @@ namespace Builder
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var email = new EmailBuilder()
+                .AddBody("Hello World!")
+                .AddRecipients(
+                    new Recipient("Bob", "bob@example.com"),
+                    new Recipient("Alice", "alice@example.com")
+                )
+                .AddCopyRecipients(new Recipient("Mallory", "mallory@example.com"))
+                .AddSubject("Greeting")
+                .GetEmailToSend;
+            Console.WriteLine(email);
         }
     }
 }

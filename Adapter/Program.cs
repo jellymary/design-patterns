@@ -1,4 +1,5 @@
 ﻿using System;
+using Example_04.Homework.Clients;
 
 namespace Adapter
 {
@@ -6,7 +7,11 @@ namespace Adapter
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            // var firstOrmClient = new UserClient(new FirstOrmAdapter(...));
+            // var secondOrmClient = new UserClient(new SecondOrmAdapter(...));
+            
+            // firstOrmClient.Add(...);
+            // secondOrmClient.Add(...);
         }
     }
 }

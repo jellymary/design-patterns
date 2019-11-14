@@ -6,7 +6,9 @@ namespace Decorator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            IChatClient chat = new CryptoDecorator(new AnonymousDecorator(new ChatClient()));
+            chat.SendMessage(new Message("alice", "bob", "hello!"));
+            chat.ReceiveMessage(new Message("alice", "bob", "<code>hello!</code>"));
         }
     }
 }

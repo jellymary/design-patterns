@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Builder", "Builder\Builder.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter", "Adapter\Adapter.csproj", "{C9FAF138-DD92-4182-A8EE-798581F17E05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decorator", "Decorator\Decorator.csproj", "{03AD2EDE-5A68-4AD9-AF4F-DD9D97C0EF30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{C9FAF138-DD92-4182-A8EE-798581F17E05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9FAF138-DD92-4182-A8EE-798581F17E05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9FAF138-DD92-4182-A8EE-798581F17E05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03AD2EDE-5A68-4AD9-AF4F-DD9D97C0EF30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03AD2EDE-5A68-4AD9-AF4F-DD9D97C0EF30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03AD2EDE-5A68-4AD9-AF4F-DD9D97C0EF30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03AD2EDE-5A68-4AD9-AF4F-DD9D97C0EF30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

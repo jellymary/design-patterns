@@ -1,107 +1,49 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Example_06.ChainOfResponsibility
+namespace ChainOfResponsibility
 {
-    public enum CurrencyType
-    {
-        Eur,
-        Dollar,
-        Ruble
-    }
-
-    public interface IBanknote
-    {
-        CurrencyType Currency { get; }
-        string Value { get; }
-    } 
-
     public class Bancomat
     {
         private readonly BanknoteHandler _handler;
 
         public Bancomat()
         {
-            _handler = new TenRubleHandler(null);
+            _handler = new ErrorHandler(null);
+
+            _handler = new FiveEuroHandler(_handler);
+            _handler = new TenEuroHandler(_handler);
+            _handler = new TwentyEuroHandler(_handler);
+            _handler = new FiftyEuroHandler(_handler);
+            _handler = new HundredEuroHandler(_handler);
+
+            _handler = new TenRubleHandler(_handler);
+            _handler = new FiftyRubleHandler(_handler);
+            _handler = new HundredRubleHandler(_handler);
+            _handler = new ThousandRubleHandler(_handler);
+
+            _handler = new FiveDollarHandler(_handler);
             _handler = new TenDollarHandler(_handler);
+            _handler = new TwentyDollarHandler(_handler);
             _handler = new FiftyDollarHandler(_handler);
             _handler = new HundredDollarHandler(_handler);
         }
 
-        public bool Validate(string banknote)
-        {
-            return _handler.Validate(banknote);
-        } 
-    }
+        public bool Validate(IBanknote banknote) => _handler.Validate(banknote);
 
-    public abstract class BanknoteHandler
-    {
-        private readonly BanknoteHandler _nextHandler;
-
-        protected BanknoteHandler(BanknoteHandler nextHandler)
+        public string CashOut(int value, CurrencyType currency)
         {
-            _nextHandler = nextHandler;
-        }
-
-        public virtual bool Validate(string banknote)
-        {
-            return _nextHandler != null && _nextHandler.Validate(banknote);
-        }
-    }
-
-    public class TenRubleHandler : BanknoteHandler
-    {
-        public override bool Validate(string banknote)
-        {
-            if (banknote.Equals("10 Рублей"))
+            try
             {
-                return true;
+                var cashOutAmountList = new List<(int value, int count)>();
+                _handler.CashOut(cashOutAmountList, new Banknote(value, currency));
+                return $"{value}{(char)currency} = {string.Join(" + ", cashOutAmountList.Select(t => $"{t.value}{(char)currency}*{t.count}"))}";
             }
-            return base.Validate(banknote);
-        }
-
-        public TenRubleHandler(BanknoteHandler nextHandler) : base(nextHandler)
-        { }
-    }
-
-    public abstract class DollarHandlerBase : BanknoteHandler
-    {
-        public override bool Validate(string banknote)
-        {
-            if (banknote.Equals($"{Value}$"))
+            catch (Exception)
             {
-                return true;
+                return $"Sorry, the bancomat can not cash {value}{(char) currency}";
             }
-            return base.Validate(banknote);
         }
-
-        protected abstract int Value { get; }
-
-        protected DollarHandlerBase(BanknoteHandler nextHandler) : base(nextHandler)
-        {
-        }
-    }
-
-    public class HundredDollarHandler : DollarHandlerBase
-    {
-        protected override int Value => 100;
-
-        public HundredDollarHandler(BanknoteHandler nextHandler) : base(nextHandler)
-        { }
-    }
-
-    public class FiftyDollarHandler : DollarHandlerBase
-    {
-        protected override int Value => 50;
-
-        public FiftyDollarHandler(BanknoteHandler nextHandler) : base(nextHandler)
-        { }
-    }
-
-    public class TenDollarHandler : DollarHandlerBase
-    {
-        protected override int Value => 10;
-
-        public TenDollarHandler(BanknoteHandler nextHandler) : base(nextHandler)
-        { }
     }
 }

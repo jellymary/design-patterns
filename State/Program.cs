@@ -6,7 +6,16 @@ namespace State
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var copyMachine = new CopyMachine();
+
+            copyMachine.DepositCoins(1);
+            copyMachine.SelectStorageMedia(StorageMedia.UsbFlashDrive);
+            copyMachine.SelectDocument(1);
+            copyMachine.Print();
+            copyMachine.SelectDocument(3);
+            copyMachine.Print();
+            copyMachine.TakeChange();
+            copyMachine.Complete();
         }
     }
 }
